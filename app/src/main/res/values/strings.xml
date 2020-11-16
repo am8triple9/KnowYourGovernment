@@ -4,4 +4,7 @@
     <string name="party">Party</string>
     <string name="name">Name</string>
     <string name="separator">Separator</string>
+    <string name="info">info</string>
+    <string name="search">search</string>
+    <string name="locationdata">LocationData</string>
 </resources>

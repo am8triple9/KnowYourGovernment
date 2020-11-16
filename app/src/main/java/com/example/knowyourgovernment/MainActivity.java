@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,6 +38,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dummy.setParty("Party " + (i + 1));
             dummy.setName("Name " + (i + 1));
             officialsList.add(dummy);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                Toast.makeText(this, "You want to do a search.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.info:
+                Toast.makeText(this, "You want to open the About Activity", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
