@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +31,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Make some data - not always needed - just used to fill list
         for (int i = 0; i < 20; i++) {
-            officialsList.add(new Official());
+            Official dummy = new Official();
+            dummy.setOfficeName("Office " + (i + 1));
+            dummy.setParty("Party " + (i + 1));
+            dummy.setName("Name " + (i + 1));
+            officialsList.add(dummy);
         }
     }
 
     @Override
     public void onClick(View v) {
-
+        int pos = recyclerView.getChildLayoutPosition(v);
+        Official o = officialsList.get(pos);
+        Toast.makeText(v.getContext(), "SHORT " + o.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onLongClick(View v) {
+        int pos = recyclerView.getChildLayoutPosition(v);
+        Official o = officialsList.get(pos);
+        Toast.makeText(v.getContext(), "LONG " + o.getName(), Toast.LENGTH_SHORT).show();
         return false;
     }
 }
