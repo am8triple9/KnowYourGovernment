@@ -7,4 +7,10 @@
     <string name="info">info</string>
     <string name="search">search</string>
     <string name="locationdata">LocationData</string>
+    <string name="know_your_government">Know Your Government</string>
+    <string name="backgroundimage">BackGroundImage</string>
+    <string name="powered_by">powered by</string>
+    <string name="google_civic_information_api"><u>Google Civic Information API</u></string>
+    <string name="_2020_yuetao_zhu">© 2020, Yuetao Zhu</string>
+    <string name="version_1_0">Version 1.0</string>
 </resources>
