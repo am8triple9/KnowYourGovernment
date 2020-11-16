@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KnowYourGovernment</string>
+    <string name="office">Office</string>
+    <string name="party">Party</string>
+    <string name="name">Name</string>
+    <string name="separator">Separator</string>
 </resources>
