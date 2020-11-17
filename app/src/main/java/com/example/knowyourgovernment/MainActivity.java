@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dummy.setOfficeName("Office " + (i + 1));
             dummy.setParty("Party " + (i + 1));
             dummy.setName("Name " + (i + 1));
+            dummy.setAddress("1600 Pennsylvania Avenue NW, Washington, DC 20500 with Official Index " + (i + 1));
+            dummy.setPhones("Phone" + (i + 1));
+            dummy.setEmails("Email" + (i + 1));
+            dummy.setUrls("Website" + (i + 1));
             officialsList.add(dummy);
         }
     }
@@ -176,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int pos = recyclerView.getChildLayoutPosition(v);
         Official o = officialsList.get(pos);
         Intent intent = new Intent(MainActivity.this, OfficialActivity.class);
-        intent.putExtra(Official.class.getName(), o);
+        intent.putExtra("Official", o);
         startActivity(intent);
     }
 
