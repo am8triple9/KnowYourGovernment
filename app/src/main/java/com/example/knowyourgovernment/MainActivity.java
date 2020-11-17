@@ -11,8 +11,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        getLocation();
+        getDefaultLocation();
 
         //Make some data - not always needed - just used to fill list
         for (int i = 0; i < 20; i++) {
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void getLocation() {
+    private void getDefaultLocation() {
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -112,18 +114,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @SuppressLint("MissingPermission")
     private void setLocation() {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         String bestProvider = locationManager.getBestProvider(criteria, true);
         //((TextView) findViewById(R.id.bestText)).setText(bestProvider);
 
-        Location currentLocation = null;
+        Location defaultLocation = null;
         if (bestProvider != null) {
-            currentLocation = locationManager.getLastKnownLocation(bestProvider);
+            defaultLocation = locationManager.getLastKnownLocation(bestProvider);
         }
-        if (currentLocation != null) {
-            ((TextView) findViewById(R.id.locationData)).setText(
-                    String.format(Locale.getDefault(),
-                            "%.4f, %.4f", currentLocation.getLatitude(), currentLocation.getLongitude()));
+        if (defaultLocation != null) {
+            double lat = defaultLocation.getLatitude();
+            double lon = defaultLocation.getLongitude();
+            List<Address> addresses;
+            Address defaultAddress = null;
+            try {
+                addresses = geocoder.getFromLocation(lat, lon, 10);
+                defaultAddress = addresses.get(0);
+                if (defaultAddress != null) {
+                    String addrLine = defaultAddress.getAddressLine(0);
+                    String[] allAddr = addrLine.split(",");
+                    ((TextView) findViewById(R.id.locationData)).setText(allAddr[1] + ", " + allAddr[2]);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             ((TextView) findViewById(R.id.locationData)).setText("No Data For Location");
         }
