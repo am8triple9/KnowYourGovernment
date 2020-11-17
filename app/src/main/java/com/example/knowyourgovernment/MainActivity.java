@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < 20; i++) {
             Official dummy = new Official();
             dummy.setOfficeName("Office " + (i + 1));
-            dummy.setParty("Party " + (i + 1));
+            if ((i % 2 == 0)) {
+                dummy.setParty("Republican");
+            } else {
+                dummy.setParty("Democratic");
+            }
             dummy.setName("Name " + (i + 1));
             dummy.setAddress("1600 Pennsylvania Avenue NW, Washington, DC 20500 with Official Index " + (i + 1));
             dummy.setPhones("Phone" + (i + 1));

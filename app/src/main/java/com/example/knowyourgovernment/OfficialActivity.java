@@ -1,9 +1,12 @@
 package com.example.knowyourgovernment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class OfficialActivity extends AppCompatActivity {
@@ -17,7 +20,10 @@ public class OfficialActivity extends AppCompatActivity {
     private TextView officialPhone;
     private TextView officialEmail;
     private TextView officialWebsite;
+    private View officialLayout;
+    private View partyImage;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,22 @@ public class OfficialActivity extends AppCompatActivity {
         if (intent.hasExtra("Official")) {
             official = (Official) intent.getSerializableExtra("Official");
             updateTextViews(official);
+            updatePartyBackGroundAndIcon(official);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void updatePartyBackGroundAndIcon(Official official) {
+        officialLayout = findViewById(R.id.officialConstraintLayout);
+        partyImage = findViewById(R.id.partyImage);
+        if(official.getParty().contentEquals("Republican")) {
+            partyImage.setBackgroundResource(R.drawable.rep_logo);
+            officialLayout.setBackgroundColor(getColor(android.R.color.holo_red_light));
+        } else if (official.getParty().contentEquals("Democratic")) {
+            partyImage.setBackgroundResource(R.drawable.dem_logo);
+            officialLayout.setBackgroundColor(getColor(android.R.color.holo_blue_light));
+        } else {
+            officialLayout.setBackgroundColor(getColor(android.R.color.holo_purple));
         }
     }
 

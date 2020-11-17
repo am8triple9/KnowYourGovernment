@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/officialConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -210,8 +211,7 @@
                     android:contentDescription="@string/todo"
                     app:layout_constraintBottom_toBottomOf="@+id/officialPicture"
                     app:layout_constraintEnd_toEndOf="@+id/officialPicture"
-                    app:layout_constraintStart_toStartOf="@+id/officialPicture"
-                    app:srcCompat="@drawable/dem_logo" />
+                    app:layout_constraintStart_toStartOf="@+id/officialPicture" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
