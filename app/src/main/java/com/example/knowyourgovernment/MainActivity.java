@@ -175,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int pos = recyclerView.getChildLayoutPosition(v);
         Official o = officialsList.get(pos);
-        Toast.makeText(v.getContext(), "SHORT " + o.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, OfficialActivity.class);
+        intent.putExtra(Official.class.getName(), o);
+        startActivity(intent);
     }
 
     @Override

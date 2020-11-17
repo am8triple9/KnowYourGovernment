@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">KnowYourGovernment</string>
+    <string name="app_label">Know Your Government</string>
     <string name="office">Office</string>
     <string name="party">Party</string>
     <string name="name">Name</string>
@@ -13,4 +14,17 @@
     <string name="google_civic_information_api"><u>Google Civic Information API</u></string>
     <string name="_2020_yuetao_zhu">© 2020, Yuetao Zhu</string>
     <string name="version_1_0">Version 1.0</string>
+    <string name="todo">TODO</string>
+    <string name="addressLabel">Address:</string>
+    <string name="officialaddress">officialAddress</string>
+    <string name="phoneLabel">Phone:</string>
+    <string name="phone">phoneNumber</string>
+    <string name="email">email</string>
+    <string name="website">Website</string>
+    <string name="emaiLabel">emai:</string>
+    <string name="websiteLabel">Website:</string>
+    <string name="officiallocationdata">LocationData</string>
+    <string name="officialoffice">Office</string>
+    <string name="officialname">Name</string>
+    <string name="officialparty">Party</string>
 </resources>

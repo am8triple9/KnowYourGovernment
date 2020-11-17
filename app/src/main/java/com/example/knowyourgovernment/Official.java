@@ -1,7 +1,9 @@
 package com.example.knowyourgovernment;
 
 
-public class Official {
+import java.io.Serializable;
+
+public class Official implements Serializable {
 
     private String city;
     private String state;
