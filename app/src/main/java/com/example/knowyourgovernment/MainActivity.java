@@ -1,6 +1,7 @@
 package com.example.knowyourgovernment;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
@@ -17,9 +19,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int MY_LOCATION_REQUEST_CODE_ID = 111;
     private LocationManager locationManager;
     private Criteria criteria;
+    public String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         getDefaultLocation();
 
-        //Make some data - not always needed - just used to fill list
+        //createDummyData();
+
+    }
+
+    private void createDummyData() {
         for (int i = 0; i < 20; i++) {
             Official dummy = new Official();
             dummy.setOfficeName("Office " + (i + 1));
@@ -60,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 dummy.setParty("Democratic");
             }
-            dummy.setName("Name " + (i + 1));
+            dummy.setOfficialName("Name " + (i + 1));
             dummy.setAddress("1600 Pennsylvania Avenue NW, Washington, DC 20500 with Official Index " + (i + 1));
             dummy.setPhones("Phone" + (i + 1));
             dummy.setEmails("Email" + (i + 1));
@@ -164,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                Toast.makeText(this, "You want to do a search.", Toast.LENGTH_SHORT).show();
+                showSearchDialog();
+                Toast.makeText(MainActivity.this, "You want to do a search!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.info:
                 openAboutActivity();
@@ -172,6 +184,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showSearchDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final EditText et = new EditText(this);
+        et.setInputType(InputType.TYPE_CLASS_TEXT);
+        et.setGravity(Gravity.CENTER_HORIZONTAL);
+        builder.setView(et);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                address = et.getText().toString();
+                searchOfficialByLocation();
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(MainActivity.this, "You changed your mind!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setMessage("Enter a city, State or a Zip Code:");
+        builder.setTitle("Search Officials by Location");
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void searchOfficialByLocation() {
+
+        CivicLoaderRunnable civicLoaderRunnable = new CivicLoaderRunnable(this);
+        new Thread(civicLoaderRunnable).start();
+
     }
 
     public void openAboutActivity() {
@@ -192,7 +238,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onLongClick(View v) {
         int pos = recyclerView.getChildLayoutPosition(v);
         Official o = officialsList.get(pos);
-        Toast.makeText(v.getContext(), "LONG " + o.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(v.getContext(), "LONG " + o.getOfficeName(), Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    public void downloadFailed() {
+        officialsList.clear();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void updateData(ArrayList<Official> list) {
+        officialsList.addAll(list);
+        mAdapter.notifyDataSetChanged();
     }
 }

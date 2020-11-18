@@ -10,22 +10,40 @@ public class Official implements Serializable {
     private String zip;
     private String officeName;
     private String officialIndex;
-    private String name;
+    private String officialName;
     private String address;
     private String party;
     private String phones;
     private String urls;
     private String emails;
     private String photoUrl;
-    private String[] channels;
+    private String[][] channels;
 
-
-    public String getName() {
-        return name;
+    public Official(String city, String state, String zip, String officeName, String officialName, String address, String party, String phones, String urls, String emails, String photoUrl, String[][] channels) {
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.officeName = officeName;
+        this.officialName = officialName;
+        this.address = address;
+        this.party = party;
+        this.phones = phones;
+        this.urls = urls;
+        this.emails = emails;
+        this.photoUrl = photoUrl;
+        this.channels = channels;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Official() {
+
+    }
+
+    public String getOfficialName() {
+        return officialName;
+    }
+
+    public void setOfficialName(String name) {
+        this.officialName = name;
     }
 
     public String getAddress() {
@@ -76,11 +94,11 @@ public class Official implements Serializable {
         this.photoUrl = photoUrl;
     }
 
-    public String[] getChannels() {
+    public String[][] getChannels() {
         return channels;
     }
 
-    public void setChannels(String[] channels) {
+    public void setChannels(String[][] channels) {
         this.channels = channels;
     }
 

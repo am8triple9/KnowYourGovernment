@@ -1,9 +1,12 @@
 package com.example.knowyourgovernment;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -22,6 +25,7 @@ public class OfficialActivity extends AppCompatActivity {
     private TextView officialWebsite;
     private View officialLayout;
     private View partyImage;
+    private ImageView officialPicture;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -62,22 +66,26 @@ public class OfficialActivity extends AppCompatActivity {
         officialPhone = findViewById(R.id.phone);
         officialEmail = findViewById(R.id.email);
         officialWebsite = findViewById(R.id.website);
+        officialPicture = findViewById(R.id.officialPicture);
 
         if (official != null) {
             if (official.getAddress() != null) {
-                String addrLine = official.getAddress();
-                String[] allAddr = addrLine.split(",");
-                officialLocation.setText(allAddr[1] + ", " + allAddr[2]);
+                officialLocation.setText(official.getCity() + " ," + official.getState() + " " + official.getZip());
             }
             if (official.getOfficeName() != null) officialOffice.setText(official.getOfficeName());
-            if (official.getName() != null) officialName.setText(official.getName());
+            if (official.getOfficialName() != null) officialName.setText(official.getOfficialName());
             if (official.getParty() != null) officialParty.setText(official.getParty());
             if (official.getAddress() != null) officialAddress.setText(official.getAddress());
             if (official.getPhones() != null) officialPhone.setText(official.getPhones());
             if (official.getEmails() != null) officialEmail.setText(official.getEmails());
             if (official.getUrls() != null) officialWebsite.setText(official.getUrls());
+            if (official.getPhotoUrl() != null) {
+                //loadRemoteImage(official.getPhotoUrl());
+            }
         }
 
     }
+
+
 
 }
