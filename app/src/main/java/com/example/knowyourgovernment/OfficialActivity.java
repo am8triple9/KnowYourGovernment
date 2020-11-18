@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class OfficialActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class OfficialActivity extends AppCompatActivity {
     private View officialLayout;
     private View partyImage;
     private ImageView officialPicture;
+
+    private static final String TAG = "OfficialActivityTag";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -80,12 +84,37 @@ public class OfficialActivity extends AppCompatActivity {
             if (official.getEmails() != null) officialEmail.setText(official.getEmails());
             if (official.getUrls() != null) officialWebsite.setText(official.getUrls());
             if (official.getPhotoUrl() != null) {
-                //loadRemoteImage(official.getPhotoUrl());
+                String imageURL = official.getPhotoUrl();
+                loadRemoteImage(imageURL);
             }
         }
 
     }
 
+    private void loadRemoteImage(String imageURL) {
+        // Needs gradle  implementation 'com.squareup.picasso:picasso:2.71828'
+        final long start = System.currentTimeMillis(); // Used for timing
+
+        Picasso.get().load(imageURL)
+                .error(R.drawable.brokenimage)
+                .placeholder(R.drawable.placeholder)
+                //.into(imageView); // Use this if you don't want a callback
+                .into(officialPicture,
+                        new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d(TAG, "onSuccess: Size: " +
+                                        ((BitmapDrawable) officialPicture.getDrawable()).getBitmap().getByteCount());
+                                long dur = System.currentTimeMillis() - start;
+                                Log.d(TAG, "onSuccess: Time: " + dur);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.d(TAG, "onError: " + e.getMessage());
+                            }
+                        });
+    }
 
 
 }
